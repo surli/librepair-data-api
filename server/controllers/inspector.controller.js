@@ -39,4 +39,10 @@ function count(req, res, next) {
     .catch(e => next(e));
 }
 
-export default { load, get, list, count };
+function hostnameStats(req, res, next) {
+  Inspector.hostnameStats()
+    .then(result => res.json(result))
+    .catch(e => next(e));
+}
+
+export default { load, get, list, count, hostnameStats };

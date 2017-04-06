@@ -68,6 +68,19 @@ InspectorSchema.statics = {
       .skip(+skip)
       .limit(+limit)
       .exec();
+  },
+
+  hostnameStats() {
+    return this.aggregate([
+      {
+        $group: {
+          _id: '$hostname',
+          counted: {
+            $sum: 1
+          }
+        }
+      }
+    ]).exec();
   }
 };
 

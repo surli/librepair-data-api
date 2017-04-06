@@ -12,6 +12,9 @@ router.route('/')
 router.route('/count')
   .get(inspectorCtrl.count);
 
+router.route('/hostnameStats')
+  .get(inspectorCtrl.hostnameStats);
+
 router.route('/:inspectorId')
   /** GET /api/users/:userId - Get user */
   .get(inspectorCtrl.get);
