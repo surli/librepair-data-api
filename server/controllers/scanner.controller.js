@@ -1,10 +1,10 @@
-import Inspector from '../models/scanner.model';
+import Scanner from '../models/scanner.model';
 
 /**
  * Load user and append to req.
  */
 function load(req, res, next, id) {
-  Inspector.get(id)
+  Scanner.get(id)
     .then((user) => {
       req.user = user; // eslint-disable-line no-param-reassign
       return next();
@@ -17,7 +17,7 @@ function load(req, res, next, id) {
  * @returns {User}
  */
 function get(req, res) {
-  return res.json(req.user);
+  return res.json(req.scanner);
 }
 
 /**
@@ -28,21 +28,23 @@ function get(req, res) {
  */
 function list(req, res, next) {
   const { limit = 50, skip = 0 } = req.query;
-  Inspector.list({ limit, skip })
+  Scanner.list({ limit, skip })
     .then(users => res.json(users))
     .catch(e => next(e));
 }
 
 function count(req, res, next) {
-  Inspector.count()
+  Scanner.count()
     .then(result => res.json(result))
     .catch(e => next(e));
 }
 
-function hostnameStats(req, res, next) {
-  Inspector.hostnameStats()
-    .then(result => res.json(result))
-    .catch(e => next(e));
+function monthData(req, res, next) {
+  const now = new Date();
+  const month = now.getMonth();
+  const year = now.getYear();
+
+  Scanner.getMonthData(month, year).then(result => res.json(result)).catch(e => next(e));
 }
 
-export default { load, get, list, count, hostnameStats };
+export default { load, get, list, count, monthData };

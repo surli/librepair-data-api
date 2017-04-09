@@ -74,14 +74,17 @@ ScannerSchema.statics = {
   },
 
   getMonthData(month, year) {
+    const nextMonth = (month === 12) ? 1 : month + 1;
+    const nextYear = (month === 12) ? year + 1 : year;
+
     return this.find({
-      $gte: new Date(year+'-'+month+'-01'),
-      $lt: new Date(year+'-'+(month+1)+'-01')
+      $gte: new Date(year, month, 1),
+      $lt: new Date(nextYear, nextMonth, 1)
     }).exec();
   }
 };
 
 /**
- * @typedef Inspector
+ * @typedef Scanner
  */
-export default mongoose.model('Inspector', InspectorSchema);
+export default mongoose.model('Scanner', ScannerSchema);

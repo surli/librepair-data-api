@@ -1,25 +1,25 @@
 import express from 'express';
 // import validate from 'express-validation';
 // import paramValidation from '../../config/param-validation';
-import inspectorCtrl from '../controllers/scanner.controller';
+import scannerCtrl from '../controllers/scanner.controller';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
 router.route('/')
   /** GET /api/users - Get list of users */
-  .get(inspectorCtrl.list);
+  .get(scannerCtrl.list);
 
 router.route('/count')
-  .get(inspectorCtrl.count);
+  .get(scannerCtrl.count);
 
-router.route('/hostnameStats')
-  .get(inspectorCtrl.hostnameStats);
+router.route('/monthData')
+  .get(scannerCtrl.monthData);
 
-router.route('/:inspectorId')
+router.route('/:scannerId')
   /** GET /api/users/:userId - Get user */
-  .get(inspectorCtrl.get);
+  .get(scannerCtrl.get);
 
 /** Load user when API with userId route parameter is hit */
-router.param('inspectorId', inspectorCtrl.load);
+router.param('scannerId', scannerCtrl.load);
 
 export default router;
