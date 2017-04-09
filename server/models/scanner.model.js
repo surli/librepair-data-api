@@ -77,13 +77,29 @@ ScannerSchema.statics = {
     const nextMonth = (month === 12) ? 1 : month + 1;
     const nextYear = (month === 12) ? year + 1 : year;
 
+    const gtDate = new Date();
+    gtDate.setUTCFullYear(year, month, 1);
+    gtDate.setUTCHours(0, 0, 0);
+    const gtDateIso = gtDate.toISOString();
+
+    const ltDate = new Date();
+    ltDate.setUTCFullYear(nextYear, nextMonth, 1);
+    ltDate.setUTCHours(0, 0, 0);
+
+    const ltDateIso = ltDate.toISOString();
+
+    console.log("Isodate: "+gtDateIso+" and "+ltDateIso);
+
     return this.find({
-      $gte: new Date(year, month, 1),
-      $lt: new Date(nextYear, nextMonth, 1)
-    }).exec();
+      dateBegin: {
+        $gte: gtDateIso,
+        $lt: ltDateIso
+      }
+    }).sort({ dateBegin: 1 }).exec();
   }
 };
 
+mongoose.set('debug', true);
 /**
  * @typedef Scanner
  */
