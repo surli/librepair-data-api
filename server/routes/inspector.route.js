@@ -15,6 +15,9 @@ router.route('/count')
 router.route('/hostnameStats')
   .get(inspectorCtrl.hostnameStats);
 
+router.route('/uniqueBuilds')
+  .get(inspectorCtrl.nbUniqueBuilds);
+
 router.route('/:inspectorId')
   /** GET /api/users/:userId - Get user */
   .get(inspectorCtrl.get);

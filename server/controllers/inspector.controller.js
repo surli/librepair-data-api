@@ -45,4 +45,10 @@ function hostnameStats(req, res, next) {
     .catch(e => next(e));
 }
 
-export default { load, get, list, count, hostnameStats };
+function nbUniqueBuilds(req, res, next) {
+  Inspector.nbUniqueBuilds()
+    .then(result => res.json(result))
+    .catch(e => next(e));
+}
+
+export default { load, get, list, count, hostnameStats, nbUniqueBuilds };

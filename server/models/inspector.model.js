@@ -81,6 +81,28 @@ InspectorSchema.statics = {
         }
       }
     ]).exec();
+  },
+
+  nbUniqueBuilds() {
+    return this.aggregate([
+      {
+        $group: {
+          _id: 'allBuilds',
+          buildIds: {
+            $addToSet: '$buildId'
+          }
+        }
+      }, {
+        $unwind: '$buildIds'
+      }, {
+        $group: {
+          _id: 'nbBuilds',
+          count: {
+            $sum: 1
+          }
+        }
+      }
+    ]).exec();
   }
 };
 
